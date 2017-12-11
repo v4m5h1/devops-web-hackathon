@@ -40,7 +40,7 @@
   </orphanedItemStrategy>
   <triggers>
     <com.cloudbees.hudson.plugins.folder.computed.PeriodicFolderTrigger plugin="cloudbees-folder@6.2.1">
-      <spec>H/6 * * * *</spec>
+      <spec>H/12 * * * *</spec>
       <interval>600000</interval>
     </com.cloudbees.hudson.plugins.folder.computed.PeriodicFolderTrigger>
   </triggers>
