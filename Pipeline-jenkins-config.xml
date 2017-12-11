@@ -8,7 +8,7 @@
       </jobPropertyDescriptors>
     </org.jenkinsci.plugins.workflow.multibranch.JobPropertyTrackerAction>
   </actions>
-  <description>devops-web-maven Pipeline</description>
+  <description>devops-web-hackathon Pipeline</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.model.ParametersDefinitionProperty>
@@ -61,7 +61,7 @@
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
     <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.28.0">
-      <projectUrl>https://github.com/veersudhir83/devops-web-maven.git/</projectUrl>
+      <projectUrl>https://github.com/veersudhir83/devops-web-hackathon.git/</projectUrl>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
   </properties>
   <definition class="org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition" plugin="workflow-cps@2.41">
@@ -69,7 +69,7 @@
       <configVersion>2</configVersion>
       <userRemoteConfigs>
         <hudson.plugins.git.UserRemoteConfig>
-          <url>https://github.com/veersudhir83/devops-web-maven.git</url>
+          <url>https://github.com/veersudhir83/devops-web-hackathon.git</url>
           <credentialsId>60d4b0b4-f871-4501-abf2-b00a5fbf7f09</credentialsId>
         </hudson.plugins.git.UserRemoteConfig>
       </userRemoteConfigs>
@@ -82,7 +82,7 @@
       <submoduleCfg class="list"/>
       <extensions/>
     </scm>
-    <scriptPath>./configuration_scripts/DevOps-Pipeline.groovy</scriptPath>
+    <scriptPath>Jenkinsfile</scriptPath>
     <lightweight>true</lightweight>
   </definition>
   <triggers/>
