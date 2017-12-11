@@ -221,7 +221,7 @@ try {
                     try {
                         //junit '**/devops-web-hackathon/target/surefire-reports/*.xml'
                         pmd defaultEncoding: '', healthy: '100', pattern: '**/target/pmd.xml', unHealthy: '300', useStableBuildAsReference: false
-                        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site/apidocs/', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: 'API Docs'])
+                        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '**/devops-web-hackathon/target/site/apidocs/', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: 'API Docs'])
                         //jacoco()
 
                         //slackSend color: "good", message: "${slackMessagePrefix} -> Generate Reports Complete"
