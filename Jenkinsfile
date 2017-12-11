@@ -55,7 +55,7 @@ try {
             // replace with right one from jenkins credentials details
 
             // color can be good, warning, danger or anything
-            slackSend baseUrl: "${slackBaseUrl}", channel: "${slackChannel}", color: "good", message: "${slackMessagePrefix} -> Build Started", teamDomain: "${slackTeamDomain}", tokenCredentialId: "${slackTokenCredentialId}"
+            //slackSend baseUrl: "${slackBaseUrl}", channel: "${slackChannel}", color: "good", message: "${slackMessagePrefix} -> Build Started", teamDomain: "${slackTeamDomain}", tokenCredentialId: "${slackTokenCredentialId}"
 
 
             if (isArchivalEnabled) {
@@ -85,10 +85,10 @@ try {
                     if (isSonarAnalysisEnabled) {
                         sonarHome = tool name: 'sonar-scanner-3.0.3.778', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
                     }
-                    slackSend color: "good", message: "${slackMessagePrefix} -> Tool Setup Complete"
+                    //slackSend color: "good", message: "${slackMessagePrefix} -> Tool Setup Complete"
 
                 } catch (exc) {
-                    slackSend color: "danger", message: "${slackMessagePrefix} -> Tool Setup Failed"
+                    //slackSend color: "danger", message: "${slackMessagePrefix} -> Tool Setup Failed"
                     error "Failure in Tool Setup stage: ${exc}"
                 }
             }
@@ -114,9 +114,9 @@ try {
                         // created folder for artifactory
                     }
 
-                    slackSend color: "good", message: "${slackMessagePrefix} -> Checkout Complete"
+                    //slackSend color: "good", message: "${slackMessagePrefix} -> Checkout Complete"
                 } catch (exc) {
-                    slackSend color: "danger", message: "${slackMessagePrefix} -> Checkout Failed"
+                    //slackSend color: "danger", message: "${slackMessagePrefix} -> Checkout Failed"
                     error "Failure in Checkout stage: ${exc}"
                 }
             }
@@ -127,9 +127,9 @@ try {
                         sh "'${mvnHome}/bin/mvn' clean package"
                         sh "cp ./target/${appName}*.${artifactExtension} ./target/${appName}.${artifactExtension}"
                     }
-                    slackSend color: "good", message: "${slackMessagePrefix} -> Build Complete"
+                    //slackSend color: "good", message: "${slackMessagePrefix} -> Build Complete"
                 } catch (exc) {
-                    slackSend color: "danger", message: "${slackMessagePrefix} -> Build Failed"
+                    //slackSend color: "danger", message: "${slackMessagePrefix} -> Build Failed"
                     error "Failure in Build stage: ${exc}"
                 }
             }
@@ -144,9 +144,9 @@ try {
                         sh "'${mvnHome}/bin/mvn' ${mvnAnalysisTargets}"
                     }
 
-                    slackSend color: "good", message: "${slackMessagePrefix} -> Analysis Complete"
+                    //slackSend color: "good", message: "${slackMessagePrefix} -> Analysis Complete"
                 } catch (exc) {
-                    slackSend color: "danger", message: "${slackMessagePrefix} -> Analysis Failed"
+                    //slackSend color: "danger", message: "${slackMessagePrefix} -> Analysis Failed"
                     error "Failure in Analysis stage: ${exc}"
                 }
             }
@@ -167,9 +167,9 @@ try {
                             }
                         }
                     }
-                    slackSend color: "good", message: "${slackMessagePrefix} -> Archival Complete"
+                    //slackSend color: "good", message: "${slackMessagePrefix} -> Archival Complete"
                 } catch (exc) {
-                    slackSend color: "danger", message: "${slackMessagePrefix} -> Archival Failed"
+                    //slackSend color: "danger", message: "${slackMessagePrefix} -> Archival Failed"
                     error "Failure in Publish stage: ${exc}"
                 }
             }
@@ -179,9 +179,9 @@ try {
                     echo 'Deploy application using ansible'
                     try {
                         ansiblePlaybook installation: 'ansible1.5', playbook: 'devops-web-hackathon/configuration_scripts/app-service-deploy.yml'
-                        slackSend color: "good", message: "${slackMessagePrefix} -> Deployment Complete"
+                        //slackSend color: "good", message: "${slackMessagePrefix} -> Deployment Complete"
                     } catch (exc) {
-                        slackSend color: "danger", message: "${slackMessagePrefix} -> Deployment Failed"
+                        //slackSend color: "danger", message: "${slackMessagePrefix} -> Deployment Failed"
                         error "Failure in Deployment stage: ${exc}"
                     }
                 }
@@ -203,9 +203,9 @@ try {
                                 '''
                             }
                         }
-                        slackSend color: "good", message: "${slackMessagePrefix} -> Test Suite Run Complete"
+                        //slackSend color: "good", message: "${slackMessagePrefix} -> Test Suite Run Complete"
                     } catch (exc) {
-                        slackSend color: "danger", message: "${slackMessagePrefix} -> Test Suite Run Failed"
+                        //slackSend color: "danger", message: "${slackMessagePrefix} -> Test Suite Run Failed"
                         error "Failure in Build and Run Test Suite stage: ${exc}"
                     }
                 }
@@ -218,9 +218,9 @@ try {
                         //jacoco()
                         //publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'devops-web-maven/target/site/apidocs', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
 
-                        slackSend color: "good", message: "${slackMessagePrefix} -> Generate Reports Complete"
+                        //slackSend color: "good", message: "${slackMessagePrefix} -> Generate Reports Complete"
                     } catch (exc) {
-                        slackSend color: "warning", message: "${slackMessagePrefix} -> Generate Reports Failed"
+                        //slackSend color: "warning", message: "${slackMessagePrefix} -> Generate Reports Failed"
                         error "Failure in Generate Reports stage: ${exc}"
                     }
                 }
