@@ -64,7 +64,7 @@ try {
 
             if (isArchivalEnabled) {
                 // Artifactory server id configured in the jenkins along with credentials
-                artifactoryServer = Artifactory.server 'ArtifactoryOSS-5.4.3'
+                artifactoryServer = Artifactory.server 'Artifactory-OSS-5.4.3'
             }
 
             // functions to use for artifactory operations
