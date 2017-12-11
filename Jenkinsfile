@@ -64,7 +64,7 @@ try {
 
             if (isArchivalEnabled) {
                 // Artifactory server id configured in the jenkins along with credentials
-                artifactoryServer = Artifactory.server 'Artifactory-OSS-5.4.3'
+                artifactoryServer = Artifactory.server 'Artifactory'
             }
 
             // functions to use for artifactory operations
@@ -82,12 +82,12 @@ try {
             stage('Tool Setup') {
                 // ** NOTE: These tools must be configured in the jenkins global configuration.
                 try {
-                    mvnHome = tool name: 'mvn3.3.9', type: 'maven'
-                    antHome = tool name: 'ant1.9.8', type: 'ant'
-                    ansible = tool name: 'ansible1.5', type: 'org.jenkinsci.plugins.ansible.AnsibleInstallation'
+                    mvnHome = tool name: 'mvn', type: 'maven'
+                    antHome = tool name: 'ant', type: 'ant'
+                    ansible = tool name: 'ansible', type: 'org.jenkinsci.plugins.ansible.AnsibleInstallation'
 
                     if (isSonarAnalysisEnabled) {
-                        sonarHome = tool name: 'sonar-scanner-3.0.3.778', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                        sonarHome = tool name: 'sonar-scanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
                     }
                     //slackSend color: "good", message: "${slackMessagePrefix} -> Tool Setup Complete"
 
