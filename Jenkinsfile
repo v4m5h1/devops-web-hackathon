@@ -22,7 +22,7 @@ try {
             sh "echo 'Not a Unix mode'"
         } else {
             def mvnHome
-            def mvnAnalysisTargets = '-P metrics pmd:pmd test javadoc:javadoc '
+            def mvnAnalysisTargets = '-P metrics pmd:pmd test '
             def antHome
             def artifactoryPublishInfo
             def artifactoryServer
