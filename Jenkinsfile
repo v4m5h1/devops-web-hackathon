@@ -32,7 +32,7 @@ try {
             //params.IS_ANALYSIS_ENABLED // Enable if you want to analyze code with sonarqube
             def isDeploymentEnabled = false
             //params.IS_DEPLOYMENT_ENABLED // Enable if you want to deploy code on app server
-            def isSeleniumTestingEnabled = false
+            def isSeleniumTestingEnabled = true
             //params.IS_SELENIUM_TESTING_ENABLED // Enable if you want to generate reports
             def isReportsEnabled = true
             //params.IS_REPORTS_ENABLED // Enable if you want to generate reports
