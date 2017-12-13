@@ -196,7 +196,10 @@ try {
                 if (isSeleniumTestingEnabled) {
                     try {
                         dir('devops-hackathon-test-suite/build/') {
-                            sh "'${antHome}/bin/ant'"
+	                        	withAnt(installation: 'ant', jdk: 'JDK1.8') {
+	                        	    // Build test.jar
+	                        	}
+                            //sh "'${antHome}/bin/ant'"
                             sh '''
                                 chown -R jenkins:jenkins *
                                 chmod 777 -R *
