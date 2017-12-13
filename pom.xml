@@ -281,7 +281,7 @@
 						<dependencies>
 							<dependency>
 								<groupId>io.sudheer.devops.web</groupId>
-								<artifactId>devops-web-maven</artifactId>
+								<artifactId>devops-web-hackathon</artifactId>
 								<version>1.0</version>
 							</dependency>
 						</dependencies>
