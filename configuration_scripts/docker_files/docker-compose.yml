@@ -1,7 +1,7 @@
 version: "3.0"
 services:
   web:
-    image: 127.0.0.1:5000/application-dev-image:${BUILD_NUMBER}
+    image: 127.0.0.1:5000/devops-web-hackathon-image:${BUILD_NUMBER}
     deploy:
       replicas: 3
     ports:
