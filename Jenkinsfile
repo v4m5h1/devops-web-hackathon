@@ -197,7 +197,7 @@ try {
                     try {
                         dir('devops-hackathon-test-suite/build/') {
 	                        	withAnt(installation: 'ant', jdk: 'JDK1.8') {
-	                        	    // Build test.jar
+	                        		sh "ant"
 	                        	}
                             //sh "'${antHome}/bin/ant'"
                             sh '''
