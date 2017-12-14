@@ -1,12 +1,15 @@
 ############################################################
-# Dockerfile to run the maven jar using alpine-java base image
+# Dockerfile to deploy war using tomcat with jre base image
 ############################################################
-FROM anapsix/alpine-java
+FROM tomcat:8.5-jre8
 
 # Maintainer
 MAINTAINER "sudheer veeravalli <veersudhir83@gmail.com>"
 
-# Copy war file to tomcat webapps folder
-COPY devops-web-hackathon.jar /home/devops-web-hackathon.jar
+# Copy war file to tomcat webapps folder 
+COPY devops-web-hackathon.war /usr/local/tomcat/webapps/
 
-CMD ["java","-jar","/home/devops-web-hackathon.jar"]
+# Make port 8080 available to the world outside this container
+EXPOSE 8080
+
+CMD ["catalina.sh", "run"]

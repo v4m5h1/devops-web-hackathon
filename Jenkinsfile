@@ -43,6 +43,9 @@ try {
             def artifactExtension = "war" // extension of the war/jar/ear - for both target directory and artifactory
             def artifactoryRepoName = 'DevOps' // repo name in artifactory
             def artifactoryAppName = appName // application name as per artifactory
+            
+    		def tomcatStackName = 'devops-web-hackathon-tomcat'
+    	    def dockerImageName = 'devops-web-hackathon-image'
 
             def buildNumber = env.BUILD_NUMBER
             def workspaceRoot = env.WORKSPACE
@@ -181,14 +184,31 @@ try {
 
             stage('Deployment') {
                 if (isDeploymentEnabled) {
-                    echo 'Deploy application using ansible'
-                    try {
-                        ansiblePlaybook installation: 'ansible1.5', playbook: 'devops-web-hackathon/configuration_scripts/app-service-deploy.yml'
-                        //slackSend color: "good", message: "${slackMessagePrefix} -> Deployment Complete"
-                    } catch (exc) {
-                        //slackSend color: "danger", message: "${slackMessagePrefix} -> Deployment Failed"
-                        error "Failure in Deployment stage: ${exc}"
-                    }
+	            	try {
+	                    // Code to deploy web application into docker swarm
+	                    dir('configuration_scripts/docker_files/') {
+	                      // Stop and remove existing stacks if any
+	                      sh "docker stack rm ${tomcatStackName} || exit 0"
+	                      sh "sleep 10s"
+	
+	                      // Force remove any previous images from previous builds - $3 corresponds to image id
+	                      sh "docker images | grep ${dockerImageName} | awk '{print \$3}' | xargs docker rmi -f || exit 0"
+	
+	                      // Create LastDeployed.html file
+	                      def startDate = new Date()
+	                      formattedDTTM = startDate.format("yyyy-MM-dd HH:mm:ss")
+	                      sh "echo '<h2> Last Deployed Time = ${formattedDTTM} </br> by Build Number = ${buildNumber} </h2>' > LastDeployed.html"
+	
+	                      // Create Image using the new artfiacts and tag with the current build number
+	                      sh "docker build -t 127.0.0.1:5000/${dockerImageName}:${buildNumber} ."
+	
+	                      // Deploy the stack
+	                      sh "export BUILD_NUMBER=${buildNumber}" // maps to image tag in docker-compose.yml
+	                      sh "docker stack deploy --compose-file docker-compose.yml ${tomcatStackName}"
+	                    }
+	                } catch (exc) {	                    
+	                    error "Failure during Deployment on Docker Containers stage: ${exc}"
+	                }
                 }
             }
 
