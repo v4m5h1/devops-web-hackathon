@@ -6,7 +6,7 @@
 	<groupId>io.sudheer.devops.web</groupId>
 	<artifactId>devops-web-hackathon</artifactId>
 	<version>1.0</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>devops-web-hackathon</name>
 	<description>Demo project for Spring Boot</description>
