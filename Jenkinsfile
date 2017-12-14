@@ -30,7 +30,7 @@ try {
             // Enable if you want to archive files and configs to artifactory
             def isSonarAnalysisEnabled = true
             //params.IS_ANALYSIS_ENABLED // Enable if you want to analyze code with sonarqube
-            def isDeploymentEnabled = false
+            def isDeploymentEnabled = true
             //params.IS_DEPLOYMENT_ENABLED // Enable if you want to deploy code on app server
             def isSeleniumTestingEnabled = true
             //params.IS_SELENIUM_TESTING_ENABLED // Enable if you want to generate reports
