@@ -186,7 +186,7 @@ try {
                 if (isDeploymentEnabled) {
 	            	try {
 	                    // Code to deploy web application into docker swarm
-	                    dir('configuration_scripts/docker_files/') {
+	                    dir('devops-web-hackathon/configuration_scripts/docker_files/') {
 	                      // Stop and remove existing stacks if any
 	                      sh "docker stack rm ${tomcatStackName} || exit 0"
 	                      sh "sleep 10s"
