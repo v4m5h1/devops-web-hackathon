@@ -5,4 +5,5 @@ services:
     deploy:
       replicas: 3
     ports:
-      - "8090:8080"
+      - "9991:8090"
+      - "9992:8091"
