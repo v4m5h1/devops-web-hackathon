@@ -159,7 +159,7 @@ try {
                 }
             }
 
-            stage('Publish') {
+            stage('Archive') {
                 try {
                     if (isArchivalEnabled) {
                         echo 'Publish Artifacts & appConfig.json in progress'
@@ -185,7 +185,11 @@ try {
             stage('Deployment') {
                 if (isDeploymentEnabled) {
 	            	try {
-	                    // Code to deploy web application into docker swarm
+	            		// Code to copy the jar to docker_files folder
+	            		dir('devops-web-hackathon/') {
+	            			sh "cp target/${appName}-1.0.${artifactExtension} configuration_scripts/docker_files/."
+	            		}
+	            		// Code to deploy web application into docker swarm
 	                    dir('devops-web-hackathon/configuration_scripts/docker_files/') {
 	                      // Stop and remove existing stacks if any
 	                      sh "docker stack rm ${tomcatStackName} || exit 0"
