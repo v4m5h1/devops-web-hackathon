@@ -21,6 +21,7 @@ try {
         if (!isUnix()) {
             sh "echo 'Not a Unix mode'"
         } else {
+        	def jenkinsIP = '10.1.151.88'
             def mvnHome
             def mvnAnalysisTargets = '-P metrics pmd:pmd test '
             def antHome
@@ -231,7 +232,7 @@ try {
                             wrap([$class: 'Xvfb', additionalOptions: '', assignedLabels: '', displayName: 99, displayNameOffset: 0, installationName: 'Default', screen: '1024x768x8', timeout: 20]) {
                                 sh '''
                                     # Xvfb :99 -screen 0 1024x768x8 > /dev/null
-                                    java -jar test.jar LINUX CHROME
+                                    java -jar test.jar ${jenkinsIP} LINUX CHROME
                                 '''
                             }
                         }

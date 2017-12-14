@@ -3,7 +3,7 @@ services:
   web:
     image: 127.0.0.1:5000/devops-web-hackathon-image:${BUILD_NUMBER}
     deploy:
-      replicas: 3
+      replicas: 2
     ports:
       - "9991:8090"
       - "9992:8091"
