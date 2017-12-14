@@ -187,7 +187,7 @@ try {
 	            	try {
 	            		// Code to copy the jar to docker_files folder
 	            		dir('devops-web-hackathon/') {
-	            			sh "cp target/${appName}-1.0.${artifactExtension} configuration_scripts/docker_files/."
+	            			sh "cp target/*.${artifactExtension} configuration_scripts/docker_files/${appName}.${artifactExtension}"
 	            		}
 	            		// Code to deploy web application into docker swarm
 	                    dir('devops-web-hackathon/configuration_scripts/docker_files/') {
