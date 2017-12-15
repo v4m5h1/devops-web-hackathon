@@ -6,3 +6,6 @@ derby.log
 .factorypath
 .settings
 .springBeans
+
+.idea/*
+.mvn/*
