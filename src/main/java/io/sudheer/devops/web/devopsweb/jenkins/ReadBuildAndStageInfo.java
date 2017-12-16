@@ -12,6 +12,8 @@ public class ReadBuildAndStageInfo {
 	
 	private static StringBuilder stageNames = new StringBuilder();
 	
+	private static int stageCount = 0;
+	
 	public static String getHeaderInfo() {
 		StringBuilder headerInfo = new StringBuilder();
 		headerInfo.append("Build, Overall Status, Date, Time, Branch, Total Duration, Build Delay, Pipeline Duration, Pipeline Delay, Pauses In Stage");
@@ -108,6 +110,7 @@ public class ReadBuildAndStageInfo {
 				stagesTimes.append(JenkinsJSONConstants.DELIMITER_COMMA_SPACE);
 				stagesTimes.append(stageDurationInSecs/60).append(".").append(stageDurationInSecs%60);		
 				if(stageNames.toString().isEmpty()) {
+					stageCount++;
 					tempStageNames.append(JenkinsJSONConstants.DELIMITER_COMMA_SPACE + stage.getString(JenkinsJSONConstants.STAGE_KEY_NAME));
 				}
 			}
@@ -142,6 +145,12 @@ public class ReadBuildAndStageInfo {
 						
 			// Append Stage Timings
 			csvLine.append(stagesTimes);
+		} else {
+			// append NA for failure data
+			System.out.println(stageCount);
+			for (int i = 0; i < 5 + stageCount; i++) {
+				csvLine.append(", NA");
+			}
 		}
 		return csvLine.toString();		
 	}

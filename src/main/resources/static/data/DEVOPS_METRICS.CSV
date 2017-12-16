@@ -1,16 +1,7 @@
-Build Number,Compile,Code Analysis,Publish,Deploy,Test,Overall
-1,10,10,35,5,30,80
-2,20,20,25,5,53,103
-3,15,15,35,8,23,81
-4,23,18,23,6,28,75
-5,25,22,35,7,32,96
-6,18,10,35,5,30,80
-7,17,20,25,5,53,103
-8,16,15,35,8,23,81
-9,12,18,23,6,28,75
-10,9,22,35,7,32,96
-11,8,10,35,5,30,80
-12,12,20,25,5,53,103
-13,18,15,35,8,23,81
-14,15,18,23,6,28,75
-15,12,22,35,7,32,96
+Build, Overall Status, Date, Time, Branch, Total Duration, Build Delay, Pipeline Duration, Pipeline Delay, Pauses In Stage, Tool Setup, Checkout, Build, Analysis, Publish, Deployment, Build and Run Test Suite, Generate Reports
+#6, SUCCESS, 13-12-2017, 09:07:52, master, 1.49, 0.8, 1.41, 0.0, 0.0, 0.0, 0.8, 0.13, 0.27, 0.3, 0.0, 0.50, 0.0
+#5, SUCCESS, 13-12-2017, 09:01:15, master, 2.31, 0.11, 2.20, 0.0, 0.0, 0.0, 0.10, 0.44, 0.54, 0.2, 0.0, 0.30, 0.0
+#4, SUCCESS, 13-12-2017, 08:52:41, master, 2.56, 0.23, 2.33, 0.0, 0.0, 0.0, 0.22, 0.19, 0.41, 0.12, 0.0, 0.58, 0.1
+#3, SUCCESS, 12-12-2017, 08:23:23, master, 4.17, 0.18, 3.59, 0.0, 0.0, 0.12, 2.7, 0.15, 0.30, 0.3, 0.0, 0.52, 0.0
+#2, FAILURE, 12-12-2017, 08:21:35, master, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA
+#1, FAILURE, 12-12-2017, 08:06:27, master, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA
