@@ -5,7 +5,7 @@ import io.sudheer.devops.web.devopsweb.jenkins.utils.JobDetailsDAO;
 
 public class TestReadBuildAndStageInfo {
 
-	public static void main(String[] args) throws Exception {
+	public static void test(String[] args) throws Exception {
 		String jenkinsURL = "http://192.168.43.115:8080";
 		String projectName = "devops-web-hackathon";
 		String projectBranch = "master";
