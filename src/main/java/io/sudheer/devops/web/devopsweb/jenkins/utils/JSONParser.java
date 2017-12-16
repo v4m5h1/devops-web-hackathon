@@ -1,4 +1,4 @@
-package io.sudheer.devops.web.devopsweb.jenkins;
+package io.sudheer.devops.web.devopsweb.jenkins.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -58,12 +58,13 @@ public class JSONParser {
 	    }
 	
 	    try {
-	        BufferedReader reader = new BufferedReader(new InputStreamReader(is, "utf-8"), 8);
-	        //BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
+	        BufferedReader reader = new BufferedReader(new InputStreamReader(
+	                is, "iso-8859-1"), 8);
 	        StringBuilder sb = new StringBuilder();
 	        String line = null;
 	        while ((line = reader.readLine()) != null) {
 	            sb.append(line + "\n");
+	            //System.out.println("Full JSON = " + line);
 	        }
 	        is.close();
 	        json = sb.toString();
