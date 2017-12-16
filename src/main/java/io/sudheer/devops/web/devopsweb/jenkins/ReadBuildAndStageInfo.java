@@ -147,7 +147,6 @@ public class ReadBuildAndStageInfo {
 			csvLine.append(stagesTimes);
 		} else {
 			// append NA for failure data
-			System.out.println(stageCount);
 			for (int i = 0; i < 5 + stageCount; i++) {
 				csvLine.append(", NA");
 			}
