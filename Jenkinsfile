@@ -21,7 +21,7 @@ try {
         if (!isUnix()) {
             sh "echo 'Not a Unix mode'"
         } else {
-        	def jenkinsIP = '10.1.151.88'
+        		def jenkinsIP = '192.168.43.115'
             def mvnHome
             def mvnAnalysisTargets = '-P metrics pmd:pmd test '
             def antHome
@@ -45,8 +45,8 @@ try {
             def artifactoryRepoName = 'DevOps' // repo name in artifactory
             def artifactoryAppName = appName // application name as per artifactory
             
-    		def tomcatStackName = 'devops-web-hackathon-tomcat'
-    	    def dockerImageName = 'devops-web-hackathon-image'
+	    		def tomcatStackName = 'devops-web-hackathon-tomcat'
+	    	    def dockerImageName = 'devops-web-hackathon-image'
 
             def buildNumber = env.BUILD_NUMBER
             def workspaceRoot = env.WORKSPACE
@@ -77,9 +77,7 @@ try {
                 "files": [
                     {
                         "pattern": "${workspaceRoot}/${appName}/target/${artifactName}.${artifactExtension}",
-                        "target": "generic-local/Applications/${artifactoryRepoName}/${artifactoryAppName}/app/${
-                buildNumber
-            }/"
+                        "target": "generic-local/Applications/${artifactoryRepoName}/${artifactoryAppName}/app/${buildNumber}/"
                     }
                 ]
             }"""
@@ -185,12 +183,12 @@ try {
 
             stage('Deployment') {
                 if (isDeploymentEnabled) {
-	            	try {
-	            		// Code to copy the jar to docker_files folder
-	            		dir('devops-web-hackathon/') {
-	            			sh "cp ./target/${appName}.${artifactExtension} ./configuration_scripts/docker_files/${appName}.${artifactExtension}"
-	            		}
-	            		// Code to deploy web application into docker swarm
+	            		try {
+		            		// Code to copy the jar to docker_files folder
+		            		dir('devops-web-hackathon/') {
+		            			sh "cp ./target/${appName}.${artifactExtension} ./configuration_scripts/docker_files/${appName}.${artifactExtension}"
+		            		}
+		            		// Code to deploy web application into docker swarm
 	                    dir('devops-web-hackathon/configuration_scripts/docker_files/') {
 	                      // Stop and remove existing stacks if any
 	                      sh "docker stack rm ${tomcatStackName} || exit 0"
