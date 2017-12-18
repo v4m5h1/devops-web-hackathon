@@ -116,6 +116,13 @@ try {
                                     branch: 'master'
                         }
                     }
+                    
+                    if (isReportsEnabled) {
+                        dir('devops-static-app') {
+                            git url: 'https://github.com/veersudhir83/devops-static-app.git',
+                                    branch: 'master'
+                        }
+                    }
 
                     dir('downloadsFromArtifactory') {
                         // created folder for artifactory
@@ -184,12 +191,12 @@ try {
             stage('Deployment') {
                 if (isDeploymentEnabled) {
 	            		try {
-		            		// Code to copy the jar to docker_files folder
+		            		// Code to copy the jar to docker_files/app folder
 		            		dir('devops-web-hackathon/') {
-		            			sh "cp ./target/${appName}.${artifactExtension} ./configuration_scripts/docker_files/${appName}.${artifactExtension}"
+		            			sh "cp ./target/${appName}.${artifactExtension} ./configuration_scripts/docker_files/app/${appName}.${artifactExtension}"
 		            		}
 		            		// Code to deploy web application into docker swarm
-	                    dir('devops-web-hackathon/configuration_scripts/docker_files/') {
+	                    dir('devops-web-hackathon/configuration_scripts/docker_files/app/') {
 	                      // Stop and remove existing stacks if any
 	                      sh "docker stack rm ${tomcatStackName} || exit 0"
 	                      sh "sleep 10s"
@@ -249,6 +256,16 @@ try {
                         pmd defaultEncoding: '', healthy: '100', pattern: '**/target/pmd.xml', unHealthy: '300', useStableBuildAsReference: false
                         //publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'devops-web-hackathon/target/site/apidocs/', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: 'API Docs'])
                         //jacoco()
+                        dir('devops-static-app/WebContent') {
+                    	  // copy Dockerfile to the WebContent folder where html files are present
+                    	  sh "cp ../../devops-web-hackathon/configuration_scripts/docker_files/reports/Dockerfile ."
+                    	  
+  	                      // Create Image using the new artfiacts and tag with the current build number
+  	                      sh "docker build -t dashboard_image ."
+  	
+  	                      // start the docker image in daemon mode and map to port 9990
+  	                      docker run -d -p 9990:80 dashboard_image:latest
+  	                    }
 
                         //slackSend color: "good", message: "${slackMessagePrefix} -> Generate Reports Complete"
                     } catch (exc) {
