@@ -226,19 +226,14 @@ try {
                 if (isSeleniumTestingEnabled) {
                     try {
                         dir('devops-hackathon-test-suite/build/') {
-	                        	withAnt(installation: 'ant', jdk: 'JDK1.8') {
-	                        		sh "ant"
-	                        	}
-                            //sh "'${antHome}/bin/ant'"
-                            sh '''
-                                chown -R jenkins:jenkins *
-                                chmod 777 -R *
-                            '''
+                        	withAnt(installation: 'ant', jdk: 'JDK1.8') {
+                        		sh "ant"
+                        	}
+                            sh "chown -R jenkins:jenkins *"
+                            sh "chmod 777 -R *"
                             wrap([$class: 'Xvfb', additionalOptions: '', assignedLabels: '', displayName: 99, displayNameOffset: 0, installationName: 'Default', screen: '1024x768x8', timeout: 20]) {
-                                sh '''
-                                    # Xvfb :99 -screen 0 1024x768x8 > /dev/null
-                                    java -jar test.jar ${jenkinsIP} LINUX CHROME
-                                '''
+                                // Xvfb :99 -screen 0 1024x768x8 > /dev/null
+                                sh "java -jar test.jar ${jenkinsIP} LINUX CHROME"
                             }
                         }
                         //slackSend color: "good", message: "${slackMessagePrefix} -> Test Suite Run Complete"
