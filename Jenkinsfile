@@ -21,7 +21,7 @@ try {
         if (!isUnix()) {
             sh "echo 'Not a Unix mode'"
         } else {
-        	def jenkinsIP = '10.1.151.88' //'192.168.43.115'
+        	def jenkinsIP = '192.168.43.115'
             def mvnHome
             def mvnAnalysisTargets = '-P metrics pmd:pmd test '
             def antHome
