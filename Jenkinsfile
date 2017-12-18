@@ -21,7 +21,7 @@ try {
         if (!isUnix()) {
             sh "echo 'Not a Unix mode'"
         } else {
-        		def jenkinsIP = '192.168.43.115'
+        	def jenkinsIP = '10.1.151.88' //'192.168.43.115'
             def mvnHome
             def mvnAnalysisTargets = '-P metrics pmd:pmd test '
             def antHome
@@ -45,8 +45,8 @@ try {
             def artifactoryRepoName = 'DevOps' // repo name in artifactory
             def artifactoryAppName = appName // application name as per artifactory
             
-	    		def tomcatStackName = 'devops-web-hackathon-tomcat'
-	    	    def dockerImageName = 'devops-web-hackathon-image'
+    		def tomcatStackName = 'devops-web-hackathon-tomcat'
+    	    def dockerImageName = 'devops-web-hackathon-image'
 
             def buildNumber = env.BUILD_NUMBER
             def workspaceRoot = env.WORKSPACE
@@ -264,7 +264,7 @@ try {
   	                      sh "docker build -t dashboard_image ."
   	
   	                      // start the docker image in daemon mode and map to port 9990
-  	                      docker run -d -p 9990:80 dashboard_image:latest
+  	                      sh "docker run -d -p 9990:80 --name dashboard dashboard_image:latest"
   	                    }
 
                         //slackSend color: "good", message: "${slackMessagePrefix} -> Generate Reports Complete"
