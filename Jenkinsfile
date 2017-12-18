@@ -257,7 +257,13 @@ try {
                         //publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'devops-web-hackathon/target/site/apidocs/', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: 'API Docs'])
                         //jacoco()
                         dir('devops-static-app/WebContent') {
-                    	  // copy Dockerfile to the WebContent folder where html files are present
+                    	
+                    	  // stop & remove existing container and image
+                    	  sh "docker rm -fv dashboard || exit 0"
+                    	  sh "docker rmi -f dashboard_image:latest || exit 0"
+	                      sh "sleep 10s"
+                    	  
+	                      // copy Dockerfile to the WebContent folder where html files are present
                     	  sh "cp ../../devops-web-hackathon/configuration_scripts/docker_files/reports/Dockerfile ."
                     	  
   	                      // Create Image using the new artfiacts and tag with the current build number
