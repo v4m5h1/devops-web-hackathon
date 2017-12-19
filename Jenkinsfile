@@ -21,7 +21,7 @@ try {
         if (!isUnix()) {
             sh "echo 'Not a Unix mode'"
         } else {
-        	def jenkinsIP = '192.168.43.115'
+        		def jenkinsIP = '192.168.43.115'
             def mvnHome
             def mvnAnalysisTargets = '-P metrics pmd:pmd test '
             def antHome
@@ -45,8 +45,8 @@ try {
             def artifactoryRepoName = 'DevOps' // repo name in artifactory
             def artifactoryAppName = appName // application name as per artifactory
             
-    		//def tomcatStackName = 'devops-web-hackathon-tomcat'
-    	    def dockerImageName = 'devops-web-hackathon-image'
+	    		//def tomcatStackName = 'devops-web-hackathon-tomcat'
+	    	    def dockerImageName = 'devops-web-hackathon-image'
 
             def buildNumber = env.BUILD_NUMBER
             def workspaceRoot = env.WORKSPACE
@@ -190,24 +190,24 @@ try {
 
             stage('Deployment') {
                 if (isDeploymentEnabled) {
-            		try {
-	            		// Code to copy the jar to docker_files/app folder
-	            		dir('devops-web-hackathon/') {
-	            			sh "cp ./target/${appName}.${artifactExtension} ./configuration_scripts/docker_files/app/${appName}.${artifactExtension}"
-	            		}
+	            		try {
+		            		// Code to copy the jar to docker_files/app folder
+		            		dir('devops-web-hackathon/') {
+		            			sh "cp ./target/${appName}.${artifactExtension} ./configuration_scripts/docker_files/app/${appName}.${artifactExtension}"
+		            		}
+		            		
 		            		// Code to deploy web application into docker swarm
 	                    dir('devops-web-hackathon/configuration_scripts/docker_files/app/') {
-	                    	
-	                   	  // stop & remove existing container and image
-                    	  sh "docker rm -fv ${appName} || exit 0"
-                    	  sh "docker rmi -f ${dockerImageName}:${buildNumber} || exit 0"
-	                      sh "sleep 10s"
-                    	  
-	                      // Create Image using the new artfiacts and tag with the current build number
-  	                      sh "docker build -t ${dockerImageName}:${buildNumber} ."
-  	
-  	                      // start the docker image in daemon mode and map to port 9990
-  	                      sh "docker run -d -p 9991:8090 -p 9992:8091 --name ${appName} ${dockerImageName}:${buildNumber}"
+		                   	// stop & remove existing container and image
+		                    	sh "docker rm -fv ${appName} || exit 0"
+		                    	sh "docker rmi -f ${dockerImageName}:${buildNumber} || exit 0"
+		                    sh "sleep 10s"
+		                	  
+		                    // Create Image using the new artfiacts and tag with the current build number
+		                    sh "docker build -t ${dockerImageName}:${buildNumber} ."
+		
+		                    // start the docker image in daemon mode and map to port 9990
+		                    sh "docker run -d -p 9991:8090 -p 9992:8091 --name ${appName} ${dockerImageName}:${buildNumber}"
 	                    }
 	                } catch (exc) {	                    
 	                    error "Failure during Deployment on Docker Containers stage: ${exc}"
@@ -219,9 +219,9 @@ try {
                 if (isSeleniumTestingEnabled) {
                     try {
                         dir('devops-hackathon-test-suite/build/') {
-                        	withAnt(installation: 'ant', jdk: 'JDK1.8') {
-                        		sh "ant"
-                        	}
+	                        	withAnt(installation: 'ant', jdk: 'JDK1.8') {
+	                        		sh "ant"
+	                        	}
                             sh "chown -R jenkins:jenkins *"
                             sh "chmod 777 -R *"
                             wrap([$class: 'Xvfb', additionalOptions: '', assignedLabels: '', displayName: 99, displayNameOffset: 0, installationName: 'Default', screen: '1024x768x8', timeout: 20]) {
