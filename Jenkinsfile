@@ -87,7 +87,7 @@ try {
                 try {
                     mvnHome = tool name: 'mvn', type: 'maven'
                     antHome = tool name: 'ant', type: 'ant'
-                    ansible = tool name: 'ansible', type: 'org.jenkinsci.plugins.ansible.AnsibleInstallation'
+                    //ansible = tool name: 'ansible', type: 'org.jenkinsci.plugins.ansible.AnsibleInstallation'
 
                     if (isSonarAnalysisEnabled) {
                         sonarHome = tool name: 'sonar-scanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
