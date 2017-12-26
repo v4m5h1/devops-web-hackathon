@@ -207,7 +207,7 @@ try {
 		                    sh "docker build -t ${dockerImageName}:${buildNumber} ."
 		
 		                    // start the docker image in daemon mode and map to port 9990
-		                    sh "docker run -d -p 9991:8090 -p 9992:8091 --name ${appName} ${dockerImageName}:${buildNumber}"
+		                    sh "docker run -d -p 9991:8090 -p --name ${appName} ${dockerImageName}:${buildNumber}"
 	                    }
 	                } catch (exc) {	                    
 	                    error "Failure during Deployment on Docker Containers stage: ${exc}"
