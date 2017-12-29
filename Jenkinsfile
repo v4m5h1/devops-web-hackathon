@@ -202,15 +202,15 @@ try {
 		            		// Code to deploy web application into docker swarm
 	                    dir('devops-web-hackathon/configuration_scripts/docker_files/app/') {
 		                   	// stop & remove existing container and image
-		                    	sh "docker rm -fv ${appName} || exit 0"
-		                    	sh "docker rmi -f ${dockerImageName}:${buildNumber} || exit 0"
-		                    sh "sleep 10s"
+		                    	sh "'${docker}/docker' rm -fv ${appName} || exit 0"
+		                    	sh "'${docker}/docker' rmi -f ${dockerImageName}:${buildNumber} || exit 0"
+		                     sh "sleep 10s"
 		                	  
 		                    // Create Image using the new artfiacts and tag with the current build number
-		                    sh "docker build -t ${dockerImageName}:${buildNumber} ."
+		                    sh "'${docker}/docker' build -t ${dockerImageName}:${buildNumber} ."
 		
 		                    // start the docker image in daemon mode and map to port 9990
-		                    sh "docker run -d -p 9991:8090 --name ${appName} ${dockerImageName}:${buildNumber}"
+		                    sh "'${docker}/docker' run -d -p 9991:8090 --name ${appName} ${dockerImageName}:${buildNumber}"
 	                    }
 	                } catch (exc) {	                    
 	                    error "Failure during Deployment on Docker Containers stage: ${exc}"
