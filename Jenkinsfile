@@ -25,6 +25,8 @@ try {
             def mvnHome
             def mvnAnalysisTargets = '-P metrics pmd:pmd test '
             def antHome
+            def ansible
+            def docker
             def artifactoryPublishInfo
             def artifactoryServer
             def isArchivalEnabled = true // params.IS_ARCHIVAL_ENABLED
@@ -88,6 +90,7 @@ try {
                     mvnHome = tool name: 'mvn', type: 'maven'
                     antHome = tool name: 'ant', type: 'ant'
                     //ansible = tool name: 'ansible', type: 'org.jenkinsci.plugins.ansible.AnsibleInstallation'
+                    docker = tool name: 'Docker', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
 
                     if (isSonarAnalysisEnabled) {
                         sonarHome = tool name: 'sonar-scanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
