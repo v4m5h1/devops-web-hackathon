@@ -203,7 +203,12 @@ try {
 	                    dir('devops-web-hackathon/configuration_scripts/docker_files/app/') {
 		                   	// stop & remove existing container and image
 		                    	sh "docker rm -fv ${appName} || exit 0"
-		                    	sh "docker rmi -f ${dockerImageName}:${buildNumber} || exit 0"
+		                    	
+		                    	// Force remove any previous images from previous builds - $3 corresponds to image id
+		                    	//sh "docker rmi -f ${dockerImageName}:${buildNumber} || exit 0"
+		                     sh "docker images | grep ${dockerImageName} | awk '{print \$3}' | xargs docker rmi -f || exit 0"
+		                     
+		                     // sleep 10secs for clearup
 		                     sh "sleep 10s"
 		                	  
 		                    // Create Image using the new artfiacts and tag with the current build number
