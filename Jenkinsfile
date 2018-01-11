@@ -21,7 +21,7 @@ try {
         if (!isUnix()) {
             sh "echo 'Not a Unix mode'"
         } else {
-            def jenkinsIP = 'localhost'
+            def jenkinsIP = '192.168.43.115'
             def mvnHome
             def mvnAnalysisTargets = '-P metrics pmd:pmd test '
             def antHome
@@ -29,9 +29,9 @@ try {
             //def docker
             def artifactoryPublishInfo
             def artifactoryServer
-            def isArchivalEnabled = false // params.IS_ARCHIVAL_ENABLED
+            def isArchivalEnabled = true // params.IS_ARCHIVAL_ENABLED
             // Enable if you want to archive files and configs to artifactory
-            def isSonarAnalysisEnabled = false
+            def isSonarAnalysisEnabled = true
             //params.IS_ANALYSIS_ENABLED // Enable if you want to analyze code with sonarqube
             def isDeploymentEnabled = true
             //params.IS_DEPLOYMENT_ENABLED // Enable if you want to deploy code on app server
@@ -55,7 +55,7 @@ try {
             def artifactoryTempFolder = 'downloadsFromArtifactory'
             // name of the local temp folder where file(s) from artifactory get downloaded
             def sonarHome
-            def SONAR_HOST_URL = 'http://192.168.43.224:9000'
+            def SONAR_HOST_URL = 'http://localhost:9000'
 
             // Logic for Slack Notification Service
             def slackBaseUrl = 'https://defaultgrouptalk.slack.com/services/hooks/jenkins-ci/'
