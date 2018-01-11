@@ -269,12 +269,6 @@ try {
   	                        // start the docker image in daemon mode and map to port 9990
   	                        sh "docker run -d -p 9990:80 --name dashboard dashboard_image:latest"
   	                    }
-
-                        dir(artifactoryTempFolder) {
-                            sh "wget https://github.com/veersudhir83/jenkins-dashboard-data/releases/download/V1.0/jenkins-dashboard-data.jar"
-                            sh "java -jar jenkins-dashboard-data.jar http://${jenkinsIP}:8080 ${appName} master > METRICS.CSV"
-                            sh "docker cp METRICS.CSV dashboard:/usr/share/nginx/html/data/DEVOPS_METRICS.CSV"
-                        }
                         //slackSend color: "good", message: "${slackMessagePrefix} -> Generate Reports Complete"
                     } catch (exc) {
                         //slackSend color: "warning", message: "${slackMessagePrefix} -> Generate Reports Failed"
