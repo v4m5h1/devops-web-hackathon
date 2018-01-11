@@ -271,11 +271,9 @@ try {
   	                    }
 
                         dir(artifactoryTempFolder) {
-                            sh ''' 
-                                wget https://github.com/veersudhir83/jenkins-dashboard-data/releases/download/V1.0/jenkins-dashboard-data.jar
-                                java -jar jenkins-dashboard-data.jar http://${jenkinsIP}:8080 ${appName} master > METRICS.CSV
-                                docker cp METRICS.CSV dashboard:/usr/share/nginx/html/data/DEVOPS_METRICS.CSV
-                            '''
+                            sh "wget https://github.com/veersudhir83/jenkins-dashboard-data/releases/download/V1.0/jenkins-dashboard-data.jar"
+                            sh "java -jar jenkins-dashboard-data.jar http://${jenkinsIP}:8080 ${appName} master > METRICS.CSV"
+                            sh "docker cp METRICS.CSV dashboard:/usr/share/nginx/html/data/DEVOPS_METRICS.CSV"
                         }
                         //slackSend color: "good", message: "${slackMessagePrefix} -> Generate Reports Complete"
                     } catch (exc) {
