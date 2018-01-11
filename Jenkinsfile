@@ -21,7 +21,7 @@ try {
         if (!isUnix()) {
             sh "echo 'Not a Unix mode'"
         } else {
-        		def jenkinsIP = '192.168.43.115'
+            def jenkinsIP = '192.168.43.115'
             def mvnHome
             def mvnAnalysisTargets = '-P metrics pmd:pmd test '
             def antHome
@@ -46,9 +46,9 @@ try {
             def artifactExtension = "jar" // extension of the war/jar/ear - for both target directory and artifactory
             def artifactoryRepoName = 'DevOps' // repo name in artifactory
             def artifactoryAppName = appName // application name as per artifactory
-            
-	    		//def tomcatStackName = 'devops-web-hackathon-tomcat'
-	    	    def dockerImageName = 'devops-web-hackathon-image'
+
+            //def tomcatStackName = 'devops-web-hackathon-tomcat'
+            def dockerImageName = 'devops-web-hackathon-image'
 
             def buildNumber = env.BUILD_NUMBER
             def workspaceRoot = env.WORKSPACE
@@ -202,14 +202,14 @@ try {
 		            		// Code to deploy web application into docker swarm
 	                    dir('devops-web-hackathon/configuration_scripts/docker_files/app/') {
 		                   	// stop & remove existing container and image
-		                    	sh "docker rm -fv ${appName} || exit 0"
+                            sh "docker rm -fv ${appName} || exit 0"
 		                    	
-		                    	// Force remove any previous images from previous builds - $3 corresponds to image id
-		                    	//sh "docker rmi -f ${dockerImageName}:${buildNumber} || exit 0"
-		                     sh "docker images | grep ${dockerImageName} | awk '{print \$3}' | xargs docker rmi -f || exit 0"
+                            // Force remove any previous images from previous builds - $3 corresponds to image id
+                            //sh "docker rmi -f ${dockerImageName}:${buildNumber} || exit 0"
+                            sh "docker images | grep ${dockerImageName} | awk '{print \$3}' | xargs docker rmi -f || exit 0"
 		                     
-		                     // sleep 10secs for clearup
-		                     sh "sleep 10s"
+                            // sleep 10secs for clearup
+                            sh "sleep 10s"
 		                	  
 		                    // Create Image using the new artfiacts and tag with the current build number
 		                    sh "docker build -t ${dockerImageName}:${buildNumber} ."
@@ -227,9 +227,9 @@ try {
                 if (isSeleniumTestingEnabled) {
                     try {
                         dir('devops-hackathon-test-suite/build/') {
-	                        	withAnt(installation: 'ant', jdk: 'JDK1.8') {
-	                        		sh "ant"
-	                        	}
+                            withAnt(installation: 'ant', jdk: 'JDK1.8') {
+                                sh "ant"
+                            }
                             sh "chown -R jenkins:jenkins *"
                             sh "chmod 777 -R *"
                             wrap([$class: 'Xvfb', additionalOptions: '', assignedLabels: '', displayName: 99, displayNameOffset: 0, installationName: 'Default', screen: '1024x768x8', timeout: 20]) {
@@ -252,23 +252,31 @@ try {
                         pmd defaultEncoding: '', healthy: '100', pattern: '**/target/pmd.xml', unHealthy: '300', useStableBuildAsReference: false
                         //publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'devops-web-hackathon/target/site/apidocs/', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: 'API Docs'])
                         //jacoco()
+
                         dir('devops-static-app/WebContent') {
                     	
-                    	  // stop & remove existing container and image
-                    	  sh "docker rm -fv dashboard || exit 0"
-                    	  sh "docker rmi -f dashboard_image:latest || exit 0"
-	                      sh "sleep 10s"
+                    	    // stop & remove existing container and image
+                            sh "docker rm -fv dashboard || exit 0"
+                            sh "docker rmi -f dashboard_image:latest || exit 0"
+                            sh "sleep 10s"
                     	  
-	                      // copy Dockerfile to the WebContent folder where html files are present
-                    	  sh "cp ../../devops-web-hackathon/configuration_scripts/docker_files/reports/Dockerfile ."
+	                        // copy Dockerfile to the WebContent folder where html files are present
+                    	    sh "cp ../../devops-web-hackathon/configuration_scripts/docker_files/reports/Dockerfile ."
                     	  
-  	                      // Create Image using the new artfiacts and tag with the current build number
-  	                      sh "docker build -t dashboard_image ."
+  	                        // Create Image using the new artfiacts and tag with the current build number
+  	                        sh "docker build -t dashboard_image ."
   	
-  	                      // start the docker image in daemon mode and map to port 9990
-  	                      sh "docker run -d -p 9990:80 --name dashboard dashboard_image:latest"
+  	                        // start the docker image in daemon mode and map to port 9990
+  	                        sh "docker run -d -p 9990:80 --name dashboard dashboard_image:latest"
   	                    }
 
+                        dir(artifactoryTempFolder) {
+                            sh ''' 
+                                wget https://github.com/veersudhir83/jenkins-dashboard-data/releases/download/V1.0/jenkins-dashboard-data.jar
+                                java -jar jenkins-dashboard-data.jar http://${jenkinsIP}:8080 ${appName} master > METRICS.CSV
+                                docker cp METRICS.CSV dashboard:/usr/share/nginx/html/data/DEVOPS_METRICS.CSV
+                            '''
+                        }
                         //slackSend color: "good", message: "${slackMessagePrefix} -> Generate Reports Complete"
                     } catch (exc) {
                         //slackSend color: "warning", message: "${slackMessagePrefix} -> Generate Reports Failed"
