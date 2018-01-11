@@ -29,7 +29,7 @@ try {
             //def docker
             def artifactoryPublishInfo
             def artifactoryServer
-            def isArchivalEnabled = true // params.IS_ARCHIVAL_ENABLED
+            //def isArchivalEnabled = true // params.IS_ARCHIVAL_ENABLED
             // Enable if you want to archive files and configs to artifactory
             def isSonarAnalysisEnabled = true
             //params.IS_ANALYSIS_ENABLED // Enable if you want to analyze code with sonarqube
