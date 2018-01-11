@@ -29,7 +29,7 @@ try {
             //def docker
             def artifactoryPublishInfo
             def artifactoryServer
-            //def isArchivalEnabled = true // params.IS_ARCHIVAL_ENABLED
+            def isArchivalEnabled = false // params.IS_ARCHIVAL_ENABLED
             // Enable if you want to archive files and configs to artifactory
             def isSonarAnalysisEnabled = true
             //params.IS_ANALYSIS_ENABLED // Enable if you want to analyze code with sonarqube
@@ -119,7 +119,7 @@ try {
                                     branch: 'master'
                         }
                     }
-                    
+
                     if (isReportsEnabled) {
                         dir('devops-static-app') {
                             git url: 'https://github.com/veersudhir83/devops-static-app.git',
@@ -198,26 +198,26 @@ try {
 		            		dir('devops-web-hackathon/') {
 		            			sh "cp ./target/${appName}.${artifactExtension} ./configuration_scripts/docker_files/app/${appName}.${artifactExtension}"
 		            		}
-		            		
+
 		            		// Code to deploy web application into docker swarm
 	                    dir('devops-web-hackathon/configuration_scripts/docker_files/app/') {
 		                   	// stop & remove existing container and image
                             sh "docker rm -fv ${appName} || exit 0"
-		                    	
+
                             // Force remove any previous images from previous builds - $3 corresponds to image id
                             //sh "docker rmi -f ${dockerImageName}:${buildNumber} || exit 0"
                             sh "docker images | grep ${dockerImageName} | awk '{print \$3}' | xargs docker rmi -f || exit 0"
-		                     
+
                             // sleep 10secs for clearup
                             sh "sleep 10s"
-		                	  
+
 		                    // Create Image using the new artfiacts and tag with the current build number
 		                    sh "docker build -t ${dockerImageName}:${buildNumber} ."
-		
+
 		                    // start the docker image in daemon mode and map to port 9990
 		                    sh "docker run -d -p 9991:8090 --name ${appName} ${dockerImageName}:${buildNumber}"
 	                    }
-	                } catch (exc) {	                    
+	                } catch (exc) {
 	                    error "Failure during Deployment on Docker Containers stage: ${exc}"
 	                }
                 }
@@ -254,18 +254,18 @@ try {
                         //jacoco()
 
                         dir('devops-static-app/WebContent') {
-                    	
+
                     	    // stop & remove existing container and image
                             sh "docker rm -fv dashboard || exit 0"
                             sh "docker rmi -f dashboard_image:latest || exit 0"
                             sh "sleep 10s"
-                    	  
+
 	                        // copy Dockerfile to the WebContent folder where html files are present
                     	    sh "cp ../../devops-web-hackathon/configuration_scripts/docker_files/reports/Dockerfile ."
-                    	  
+
   	                        // Create Image using the new artfiacts and tag with the current build number
   	                        sh "docker build -t dashboard_image ."
-  	
+
   	                        // start the docker image in daemon mode and map to port 9990
   	                        sh "docker run -d -p 9990:80 --name dashboard dashboard_image:latest"
   	                    }
