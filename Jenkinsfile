@@ -31,7 +31,7 @@ try {
             def artifactoryServer
             def isArchivalEnabled = false // params.IS_ARCHIVAL_ENABLED
             // Enable if you want to archive files and configs to artifactory
-            def isSonarAnalysisEnabled = true
+            def isSonarAnalysisEnabled = false
             //params.IS_ANALYSIS_ENABLED // Enable if you want to analyze code with sonarqube
             def isDeploymentEnabled = true
             //params.IS_DEPLOYMENT_ENABLED // Enable if you want to deploy code on app server
