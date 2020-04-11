@@ -12,7 +12,7 @@ pipeline {
    stages {
       stage('Checkout') {
          steps {
-            cleanWs() 
+            //cleanWs() 
             echo 'In Checkout Stage'
             checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/veersudhir83/devops-web-hackathon.git']]])
          }
