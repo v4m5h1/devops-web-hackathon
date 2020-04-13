@@ -14,7 +14,7 @@ pipeline {
          steps {
             //cleanWs() 
             echo 'In Checkout Stage'
-            checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/veersudhir83/devops-web-hackathon.git']]])
+            checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/v4m5h1/devops-web-hackathon.git']]])
          }
       }
       stage('Build') {
